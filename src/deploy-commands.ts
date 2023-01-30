@@ -1,11 +1,15 @@
-import { REST, Routes, SlashCommandBuilder } from "discord.js";
+import { REST, Routes } from "discord.js";
+import * as commandModules from "./commands";
 import config from "./config";
 
-const commands = [
-  new SlashCommandBuilder()
-    .setName("ping")
-    .setDescription("Replies with Pong!"),
-];
+type Command = {
+  data: unknown;
+};
+
+const commands = [];
+for (const module of Object.values<Command>(commandModules)) {
+  commands.push(module.data);
+}
 
 const rest = new REST().setToken(config.BOT_TOKEN);
 
